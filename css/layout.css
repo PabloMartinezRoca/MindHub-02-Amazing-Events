@@ -1,0 +1,88 @@
+/* Bootstrap extension */
+.w-90 {
+  width: 90% !important;
+}
+
+
+/* Website styles */
+.website-logo {
+  height: 40px;
+}
+
+.page-switcher-nav {
+  background-color: lightslategrey;
+	height: 3em;
+	font-size: 2em;
+}
+
+/* Search bar section */
+.search-input {
+	width: 200px !important;
+	height: 2.9em !important; 
+}
+
+/* Album of events section */
+.album .card-title {
+	margin-top: -2em !important;
+	height: 2em !important;
+	line-height: 2em;
+}
+
+.album .img-card-container {
+	height: 325px;
+}
+
+.album .img-card-container img {
+	width: 100%;
+}
+
+
+/* Contact Us secton */
+.contact-form textarea {
+	min-height: 200px !important;
+}
+
+
+/* Stats section */
+.stats h2 {
+	background-color:deeppink;
+	padding: 0.3em 0.5em;
+	color: #fff;
+	font-size: 1.2rem;
+	margin-top: 1rem;
+}
+
+.stats table {
+	font-size: 1rem;
+	border-collapse: separate;
+  border-spacing: 1rem 0;
+}
+
+.stats table th {
+	border-bottom: 1px solid;
+	border-color: dodgerblue;
+	padding-right: 1rem;
+}
+
+.stats table td {
+	border-bottom: 1px dotted;
+	border-color: dodgerblue;
+	padding-right: 1rem;
+	background-color:aliceblue;
+}
+
+.stats table tr:last-child td {
+	border-style: double !important;
+}
+
+@media (max-width: 750px) {
+	* {
+		font-size: 0.9rem;
+	}
+}
+
+@media (max-width: 480px) {
+	* {
+		font-size: 0.7rem;
+	}
+}
