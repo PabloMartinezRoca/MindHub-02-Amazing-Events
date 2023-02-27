@@ -9,12 +9,15 @@
 
 	<link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
 
+	<!-- Bootstrap stylesheet -->
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
 		integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
 
+	<!-- Website stylesheets -->
 	<link rel="stylesheet" href="./css/layout.css">
 	<link rel="stylesheet" href="./css/stats.css">
 
+	<!-- Page configuration -->
 	<script>
 		const page = "stats";
 		const navElements = ["index", "upcoming-events", "past-events", "contact", "stats"];
@@ -23,13 +26,16 @@
 
 </head>
 
+<!-- Body -->
 <body class="body-container">
+	<!-- Header -->
 	<header class="d-flex flex-column flex-wrap">
 		<div class="d-flex flex-wrap justify-content-center p-3">
 			<a href="./index.html" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
 				<img class="website-logo" src="./resources/logos/logo-amazing-events.png" alt="Amazing Events website logo">
 			</a>
 
+			<!-- Main Nav -->
 			<nav class="main-nav">
 				<ul class="nav nav-pills">
 					<li class="nav-item page-index"><a href="./index.html" class="nav-link">Home</a></li>
@@ -42,6 +48,7 @@
 			</nav>
 		</div>
 
+		<!-- Page switcher -->
 		<div class="page-switcher-nav d-flex justify-content-center">
 			<nav class="w-90 d-flex justify-content-between align-items-center py-3 text-white">
 				<a id="page-switcher-nav-pre" href="./stats.html"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"
@@ -59,6 +66,7 @@
 		</div>
 	</header>
 
+	<!-- Main -->
 	<main class="main-container d-flex justify-content-center">
 		<section class="stats d-flex w-75 flex-column flex-wrap justify-content-center my-5 gap-3">
 			
@@ -138,6 +146,8 @@
 
 		</section>
 	</main>
+
+	<!-- Footer -->
 	<footer class="d-flex justify-content-around align-items-center py-3 my-4 border-top">
 		<ul class="nav">
 			<li class="ms-3"><a class="text-muted" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
@@ -160,25 +170,13 @@
 		<span class="text-muted align-items-center">&copy; 2023 FE05 TN</span>
 	</footer>
 
+	<!-- Bootstrap JS -->
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
 		crossorigin="anonymous"></script>
 
-	<script>
-		// Configure main nav
-		let navElement = document.getElementsByClassName("page-" + page);
-		navElement[0].firstChild.classList.add("active");
-
-		let index = navElements.indexOf(page);
-		let indexPre = index == 0 ? navElements.length - 1 : index - 1;
-		let indexPos = index == navElements.length - 1 ? 0 : index + 1;
-
-		document.getElementById("page-switcher-nav-pre").href = navElements[indexPre] + ".html";
-		document.getElementById("page-switcher-nav-pos").href = navElements[indexPos] + ".html";
-
-		document.getElementById("page-switcher-nav-title").innerHTML = pageNames[index];
-
-	</script>
+	<!-- Configure Main Nav -->
+	<script src="./scripts/nav.js"></script>
 
 </body>
 

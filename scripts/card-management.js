@@ -126,7 +126,7 @@ function insertFilterBar(categoryEventsList) {
   for (let category of categoryEventsList) {
     let filterBarTemplate = `
 		<label class="filter-bar-item">
-			<input class="form-check-input flex-shrink-0 me-2" type="checkbox" value="${category}">
+			<input name="categoryFilter" class="category-filter form-check-input flex-shrink-0 me-2" type="checkbox" value="${category}">
 			<span>${category}</span>
 		</label>
 		`;
@@ -134,3 +134,33 @@ function insertFilterBar(categoryEventsList) {
     filterBarContainer.innerHTML += filterBarTemplate;
   }
 }
+
+// Filter and Search bar functionality
+function captureData() {
+  let searchBarInput = document.getElementById("search-bar-input")
+  let categoryFilters = document.querySelectorAll('.category-filter:checked')
+  
+  
+  let data = {
+    [searchBarInput.name]: searchBarInput.value,
+    ['categoryFilters']: []
+  };
+
+  
+  for(let each of categoryFilters) {
+    data['categoryFilters'].push(each.value)
+  }
+
+  console.log(data)
+}
+
+const handleForm = (event) => {
+  event.preventDefault()
+  captureData()
+};
+
+// Executs when DOM is ready
+document.addEventListener("DOMContentLoaded", function (event) {
+  let searchBarButton = document.getElementById("search-bar-button");
+  searchBarButton.addEventListener("click", handleForm);
+})

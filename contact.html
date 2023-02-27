@@ -9,27 +9,36 @@
 
 	<link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
 
+	<!-- Bootstrap stylesheet -->
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
 		integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
 
+	<!-- Website stylesheets -->
 	<link rel="stylesheet" href="./css/layout.css">
 	<link rel="stylesheet" href="./css/contact-us.css">
 
+	<!-- Page configuration -->
 	<script>
 		const page = "contact";
 		const navElements = ["index", "upcoming-events", "past-events", "contact", "stats"];
 		const pageNames = ["Home", "Upcoming Events", "Past Events", "Contact Us", "Stats"];
 	</script>
 
+	<!-- Scripts-->
+	<script src="./scripts/contact-form.js"></script>
+
 </head>
 
+<!-- Body -->
 <body class="body-container">
+	<!-- Header -->
 	<header class="d-flex flex-column flex-wrap">
 		<div class="d-flex flex-wrap justify-content-center p-3">
 			<a href="./index.html" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
 				<img class="website-logo" src="./resources/logos/logo-amazing-events.png" alt="Amazing Events website logo">
 			</a>
 
+			<!-- Main Nav -->
 			<nav class="main-nav">
 				<ul class="nav nav-pills">
 					<li class="nav-item page-index"><a href="./index.html" class="nav-link">Home</a></li>
@@ -42,6 +51,7 @@
 			</nav>
 		</div>
 
+		<!-- Page switcher -->
 		<div class="page-switcher-nav d-flex justify-content-center">
 			<nav class="w-90 d-flex justify-content-between align-items-center py-3 text-white">
 				<a id="page-switcher-nav-pre" href="./stats.html"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"
@@ -59,34 +69,38 @@
 		</div>
 	</header>
 
+	<!-- Main -->
 	<main class="main-container d-flex flex-column">
 		<section class="contact-form d-flex flex-wrap justify-content-center my-3 gap-4">
 			<h1 class="d-none">Contact Us</h1>
+			
+			<!-- Contact Form -->
 			<form class="">
 				<div class="form-floating mb-3">
-					<input type="text" class="form-control rounded-3" id="name" placeholder="John Wayne">
+					<input type="text" class="form-control rounded-3" id="name" name="name" placeholder=" " >
 					<label for="name">Name</label>
 				</div>
 
 				<div class="form-floating mb-3">
-					<input type="email" class="form-control rounded-3" id="email" placeholder="john@wayne.com">
+					<input type="email" class="form-control rounded-3" id="email" name="email" placeholder=" " >
 					<label for="email">Email address</label>
 				</div>
 
 				<div class="form-floating mb-3">
-					<textarea class="form-control rounded-3" id="message" placeholder="Type your message here..." rows="3"></textarea>
+					<textarea class="form-control rounded-3" id="message" placeholder="Type your message here..." rows="3" name="message" ></textarea>
 					<label for="message" class="form-label">Type your message here...</label>
 				</div>
 
 				<div class="form-floatig d-flex flex-column">
-					<button class="w-25 mb-2 btn btn-sm rounded-2 btn-primary" type="submit">Submit</button>
+					<button id="form-button" class="w-25 mb-2 btn btn-sm rounded-2 btn-primary" type="submit">Submit</button>
 					<small class="text-muted">By clicking Submit, you agree to the terms of use and our Privacy policy.</small>
 				</div>
 			</form>
 
-
 		</section>
 	</main>
+
+	<!-- Footer -->
 	<footer class="d-flex justify-content-around align-items-center py-3 my-4 border-top">
 		<ul class="nav">
 			<li class="ms-3"><a class="text-muted" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
@@ -105,29 +119,17 @@
 							d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z" />
 					</svg></a></li>
 		</ul>
-	
+
 		<span class="text-muted align-items-center">&copy; 2023 FE05 TN</span>
 	</footer>
 
+	<!-- Bootstrap JS -->
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
 		crossorigin="anonymous"></script>
 
-	<script>
-		// Configure main nav
-		let navElement = document.getElementsByClassName("page-" + page);
-		navElement[0].firstChild.classList.add("active");
-
-		let index = navElements.indexOf(page);
-		let indexPre = index == 0 ? navElements.length - 1 : index - 1;
-		let indexPos = index == navElements.length - 1 ? 0 : index + 1;
-
-		document.getElementById("page-switcher-nav-pre").href = navElements[indexPre] + ".html";
-		document.getElementById("page-switcher-nav-pos").href = navElements[indexPos] + ".html";
-
-		document.getElementById("page-switcher-nav-title").innerHTML = pageNames[index];
-
-	</script>
+	<!-- Configure Main Nav -->
+	<script src="./scripts/nav.js"></script>
 
 </body>
 

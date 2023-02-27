@@ -32,6 +32,7 @@
 	<script src="./scripts/card-management.js"></script>
 </head>
 
+<!-- Body -->
 <body class="body-container d-flex">
 	<!-- Header -->
 	<header class="d-flex flex-column flex-wrap">
@@ -106,9 +107,9 @@
 					<!-- Search input -->
 					<div id="search-bar-container" class="search-bar-container d-flex align-items-center gap-2">
 
-						<input type="search" class="form-control search-input" placeholder="Search..." aria-label="Search">
+						<input id="search-bar-input" name="search-bar-input" type="search" class="form-control search-input" placeholder="Type to search for an event..." aria-label="Search">
 
-						<a href="#" class="d-block link-dark text-decoration-none">
+						<a id="search-bar-button" href="#" class="d-block link-dark text-decoration-none">
 							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
 								<path
 									d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
@@ -133,6 +134,8 @@
 
 		</section>
 	</main>
+
+	<!-- Footer -->
 	<footer class="d-flex justify-content-around align-items-center py-3 mt-4 border-top bg-body-secondary">
 		<ul class="nav">
 			<li class="ms-3"><a class="text-muted" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
