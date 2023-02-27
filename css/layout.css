@@ -1,12 +1,29 @@
-/* Bootstrap extension */
-.w-90 {
-  width: 90% !important;
+/* Reset CSS styles */
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
 }
 
+/* Website Style ----------------------------------------------- */
 
-/* Website styles */
-.website-logo {
-  height: 40px;
+/* General layout */
+.gap-x-3 {
+  grid-gap: 0 1rem !important;
+
+}
+
+.gap-x-5 {
+  grid-gap: 0 3rem !important;
+}
+
+.bg-opacity-90 {
+  --bs-bg-opacity: 0.90;
+}
+
+/* DOM elements */
+html, body {
+	min-width: 375px !important;
 }
 
 .body-container {
@@ -20,92 +37,22 @@
 	flex-grow: 1;
 }
 
+.website-logo {
+  height: 40px;
+}
+
+
+/* Page switcher in header */
 .page-switcher-nav {
   background-color: lightslategrey;
-	height: 3em;
-	font-size: 2em;
+	height: 10vh;
+	min-height: 50px !important;
 }
 
-/* Search bar section */
-.search-input {
-	width: 200px !important;
-	height: 2.9em !important; 
+.page-switcher-nav nav {
+	width: 90%;
 }
 
-/* Album of events section */
-.album .card-title {
-	margin-top: -2em !important;
-	height: 2em !important;
-	line-height: 2em;
-}
-
-.album .img-card-container {
-	height: 325px;
-}
-
-.album .img-card-container img {
-	width: 100%;
-}
-
-
-/* Contact Us secton */
-.contact-form textarea {
-	min-height: 200px !important;
-}
-
-
-/* Stats section */
-.stats h2 {
-	background-color:deeppink;
-	padding: 0.3em 0.5em;
-	color: #fff;
-	font-size: 1.2rem;
-	margin-top: 1rem;
-}
-
-.stats table {
-	font-size: 1rem;
-	border-collapse: separate;
-  border-spacing: 1rem 0;
-}
-
-.stats table th {
-	border-bottom: 1px solid;
-	border-color: dodgerblue;
-	padding-right: 1rem;
-}
-
-.stats table td {
-	border-bottom: 1px dotted;
-	border-color: dodgerblue;
-	padding-right: 1rem;
-	background-color:aliceblue;
-}
-
-.stats table tr:last-child td {
-	border-style: double !important;
-}
-
-@media (max-width: 750px) {
-	* {
-		font-size: 0.9rem;
-	}
-}
-
-@media (max-width: 480px) {
-	* {
-		font-size: 0.7rem;
-	}
-}
-
-
-/* Details Page */
-.bg-container {
-	background-size: cover;
-	background-position: center	center;
-	background-repeat: no-repeat;
-}
-
-.bg-container .card {
-	background-color: rgba(255, 255, 255, 0.9);
+.page-switcher-nav #page-switcher-nav-title {
+	font-size: 2rem;
 }

@@ -1,0 +1,31 @@
+/* Stats section */
+.stats h2 {
+	background-color:deeppink;
+	padding: 0.3em 0.5em;
+	color: #fff;
+	font-size: 1.2rem;
+	margin-top: 1rem;
+}
+
+.stats table {
+	font-size: 1rem;
+	border-collapse: separate;
+  border-spacing: 1rem 0;
+}
+
+.stats table th {
+	border-bottom: 1px solid;
+	border-color: dodgerblue;
+	padding-right: 1rem;
+}
+
+.stats table td {
+	border-bottom: 1px dotted;
+	border-color: dodgerblue;
+	padding-right: 1rem;
+	background-color:aliceblue;
+}
+
+.stats table tr:last-child td {
+	border-style: double !important;
+}
