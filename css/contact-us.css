@@ -1,0 +1,4 @@
+/* Contact Us secton */
+.contact-form textarea {
+	min-height: 200px !important;
+}
