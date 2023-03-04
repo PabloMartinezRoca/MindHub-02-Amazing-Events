@@ -1,4 +1,4 @@
-function getEvents(data, timeEvents = null) {
+function getEventsList(data, timeEvents = null) {
   // 'upcoming' , 'past'
   let eventsList = [];
 
@@ -12,12 +12,12 @@ function getEvents(data, timeEvents = null) {
     eventsList.push(eventDetails);
   }
 
-  sortEvents(eventsList, "desc");
+  sortEventsList(eventsList, "desc");
 
   return eventsList;
 }
 
-function sortEvents(eventsList, order = "asc") {
+function sortEventsList(eventsList, order = "asc") {
   if (order == "asc") {
     eventsList.sort((a, b) => (a.date > b.date ? 1 : a.date < b.date ? -1 : 0));
   } else {
@@ -25,21 +25,21 @@ function sortEvents(eventsList, order = "asc") {
   }
 }
 
-function getCategoryList(eventsList) {
+function getCategoriesList(eventsList) {
   let categoryEventsList = [];
 
-  for (let category of eventsList) {
-    if (!categoryEventsList.includes(category.category)) {
-      categoryEventsList.push(category.category);
+  eventsList.forEach((event) => {
+    if (!categoryEventsList.includes(event.category)) {
+      categoryEventsList.push(event.category);
     }
-  }
+  })
 
-  sortCategories(categoryEventsList, "asc");
+  sortCategoriesList(categoryEventsList, "asc");
 
   return categoryEventsList;
 }
 
-function sortCategories(categoryEventsList, order = "asc") {
+function sortCategoriesList(categoryEventsList, order = "asc") {
   if (order == "asc") {
     categoryEventsList.sort((a, b) => (a > b ? 1 : a < b ? -1 : 0));
   } else {
@@ -48,81 +48,40 @@ function sortCategories(categoryEventsList, order = "asc") {
   return categoryEventsList;
 }
 
-function getCard(eventDetails) {
-  
-	// Set Premiere Events
-	let premiere = ""
-  let premiereDate = ""
-	
-	if(eventDetails.date > data.currentDate)
-	{
-		premiere = "¡COMING SOON!"
-		
-		let days = new Date(eventDetails.date).getTime() - new Date(data.currentDate).getTime() 
-		days = days / (1000 * 60 * 60 * 24)
-		
-		premiereDate = "PREMIERE ON " + new Date(eventDetails.date).toLocaleDateString("en-US") + " • " + days + (days > 1 ? " DAYS" : " DAY") + " LEFT"
-  }
-	else
-	{
-		premiereDate = "SINCE " + new Date(eventDetails.date).toLocaleDateString("en-US")
-	}
-
-  // Card Templates
-  cardTemplate = `
-		<!-- Card -->
-		<div class="event-card card shadow">
-				
-			<div class="card-header text-center">${premiere}</div>
-
-			<div class="card-image-container">
-				<img class="object-fit-cover" src="${eventDetails.image}" alt="">
-			</div>
-
-			<h5 class="event-title bg-white bg-opacity-90 mb-0 text-center">${eventDetails.name}</h5>
-
-			<h6 class="event-category small mb-2"><span class="text-muted">Category : </span><span class="strong">${eventDetails.category}</span></h6>
-
-			<div class="card-body d-flex flex-column justify-content-between">					
-				<p class="event-description mb-4">${eventDetails.description}</p>
-				
-				<div>
-					<div class="d-flex justify-content-between align-items-center">
-						<div class="btn-group">
-							<a href="#" onclick="location.href='./details.html?id=${eventDetails._id}'" class="btn btn-sm btn-outline-amazing"><span class="pe-2">View event</span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#cc0066"  viewBox="0 0 16 16"><path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0zM4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z" /></svg></a>							
-						</div>
-					
-						<small class="event-price">Price $ ${eventDetails.price}</small>
-					</div>
-				</div>
-			</div>
-			
-			<div class="card-footer">
-				<p class="event-premiere">${premiereDate}</p>
-			</div>
-		</div>
-		<!-- end card -->
-		`;
-
-  return cardTemplate;
-}
-
-function insertCardsInDOM(containerID, data, timeEvents = null) {
-  let container = document.getElementById(containerID);
-
-  let eventsList = getEvents(data, timeEvents);
-  let categoryEventsList = getCategoryList(eventsList);
-
+function insertCardsInDOM(eventsCardsContainer, eventsList) {
   for (let eventDetails of eventsList) {
-    container.innerHTML += getCard(eventDetails);
+    eventsCardsContainer.innerHTML += getCard(eventDetails);
   }
-
-  insertFilterBar(categoryEventsList);
+  eventsCardsContainer.innerHTML += defineNoEventCard();
 }
 
-function insertFilterBar(categoryEventsList) {
-  let filterBarContainer = document.getElementById("filter-bar-container");
+function getCard(eventDetails) {
+  // Set Premiere Events
+  if (eventDetails.date > data.currentDate) {
+    eventDetails.premiere = "¡COMING SOON!";
 
+    let days =
+      new Date(eventDetails.date).getTime() -
+      new Date(data.currentDate).getTime();
+    days = days / (1000 * 60 * 60 * 24);
+
+    eventDetails.premiereDate =
+      "PREMIERE ON " +
+      new Date(eventDetails.date).toLocaleDateString("en-US") +
+      " • " +
+      days +
+      (days > 1 ? " DAYS" : " DAY") +
+      " LEFT";
+  } else {
+    eventDetails.premiere = "&nbsp;";
+    eventDetails.premiereDate =
+      "SINCE " + new Date(eventDetails.date).toLocaleDateString("en-US");
+  }
+
+  return defineCardSummary(eventDetails);
+}
+
+function insertCategoriesFilterBar(filterBarContainer, categoryEventsList) {
   for (let category of categoryEventsList) {
     let filterBarTemplate = `
 		<label class="filter-bar-item">
@@ -135,32 +94,85 @@ function insertFilterBar(categoryEventsList) {
   }
 }
 
-// Filter and Search bar functionality
-function captureData() {
-  let searchBarInput = document.getElementById("search-bar-input")
-  let categoryFilters = document.querySelectorAll('.category-filter:checked')
-  
-  
-  let data = {
-    [searchBarInput.name]: searchBarInput.value,
-    ['categoryFilters']: []
-  };
-
-  
-  for(let each of categoryFilters) {
-    data['categoryFilters'].push(each.value)
-  }
-
-  console.log(data)
-}
-
-const handleForm = (event) => {
-  event.preventDefault()
-  captureData()
-};
-
 // Executs when DOM is ready
 document.addEventListener("DOMContentLoaded", function (event) {
-  let searchBarButton = document.getElementById("search-bar-button");
-  searchBarButton.addEventListener("click", handleForm);
+  // Get the Events List
+  const eventsList = getEventsList(data, filterEvents);
+
+  // Insert Card objects in DOM
+  const eventsCardsContainer = document.getElementById("event-card-container");
+  insertCardsInDOM(eventsCardsContainer, eventsList);
+
+  // Create the Categories Filter and Search Bar Engine ----------------------------------------------------------------
+
+  // Configure the Categories Filter
+  let activeFilters = [];
+  let filterBarContainer = document.getElementById("filter-bar-container");
+
+  filterBarContainer.addEventListener("click", (e) => {
+    activeFilters = Array.prototype.slice
+      .call(filterBarContainer.querySelectorAll(".category-filter:checked"))
+      .map((filter) => filter.value);
+
+    applyfilters()
+  })
+
+  // Insert the Categories Filter
+  let categoryEventsList = getCategoriesList(eventsList);
+  insertCategoriesFilterBar(filterBarContainer, categoryEventsList);
+
+  // Configure Search Bar
+  let searchBarInput = document.getElementById("search-bar-input");
+
+  searchBarInput.addEventListener("input", (e) => {
+    applyfilters()
+  })
+
+  // configure the Clear Filters button
+  let clearFiltersButton = document.querySelector(".clear-filters-button")
+  clearFiltersButton.addEventListener("click", (e) => clearFilters())
+
+  // Functions
+
+  function applyfilters() {
+    let eventsFound = false
+    eventsCardsContainer
+      .querySelectorAll(".event-card")
+      .forEach((eventCard) => {
+        if (
+          (activeFilters.includes(
+            eventCard.querySelector(".category-event").textContent
+          ) ||
+            activeFilters.length === 0) &&
+          eventCard.querySelector(".event-title").textContent.toString().toLowerCase().includes(searchBarInput.value.toString().toLowerCase())
+        ) {
+          eventCard.style.display = "flex";
+          eventsFound = true
+        } else {
+          eventCard.style.display = "none";
+        }
+      });
+      if (!eventsFound)
+      {
+        document.querySelector(".no-event-card").style.display = "flex"
+      }
+      else
+      {
+        document.querySelector(".no-event-card").style.display = "none"
+      }
+  }
+
+  function showNoEvents()
+  {
+    eventsCardsContainer.innerHTML += defineNoEventCard()
+  }
+
+  function clearFilters()
+  {
+    searchBarInput.value = ""
+    activeFilters = []
+
+    Array.prototype.slice.call(filterBarContainer.querySelectorAll(".category-filter:checked")).map((filter) => filter.checked = false);
+    applyfilters()
+  }
 })

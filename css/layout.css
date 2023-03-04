@@ -10,7 +10,6 @@
 /* General layout */
 .gap-x-3 {
   grid-gap: 0 1rem !important;
-
 }
 
 .gap-x-5 {
@@ -41,6 +40,11 @@ html, body {
   height: 40px;
 }
 
+/* Main Navigation */
+
+a.nav-link:hover:not(.active) {
+	text-decoration: underline;
+}
 
 /* Page switcher in header */
 .page-switcher-nav {

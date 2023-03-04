@@ -26,6 +26,9 @@
 	<!-- Load data file -->
 	<script src="./data/data_ae_1.js"></script>
 
+	<!-- Templates -->
+	<script src="./templates/card-details-template.js"></script>
+	
 	<!-- Scripts-->
 	<script src="./scripts/card-details.js"></script>
 </head>
@@ -104,16 +107,6 @@
 		integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
 		crossorigin="anonymous"></script>
 
-	<!-- Insert Card Details object in DOM -->
-	<script>
-		const params = new URLSearchParams(window.location.search)
-		insertCardDetailsInDOM("event-details-card-container", data, params.get("id"))
-	</script>
-
-	<!-- Insert background image for card details -->
-	<script>
-		insertBackgroundContainer("bg-event-details-card", data, params.get("id"))
-	</script>
-</body>
+	</body>
 
 </html>
