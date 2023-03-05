@@ -79,6 +79,10 @@
 	margin: 0.5em 0;
 }
 
+.event-card-container .no-event-card {
+	display: none;
+}
+
 /* Buttons */
 .btn-outline-amazing {
   border-color: #cc0066;
