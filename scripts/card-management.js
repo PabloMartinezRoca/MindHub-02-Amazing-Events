@@ -1,3 +1,5 @@
+let data = [];
+
 function getEventsList(data, timeEvents = null) {
   // 'upcoming' , 'past'
   let eventsList = [];
@@ -32,7 +34,7 @@ function getCategoriesList(eventsList) {
     if (!categoryEventsList.includes(event.category)) {
       categoryEventsList.push(event.category);
     }
-  })
+  });
 
   sortCategoriesList(categoryEventsList, "asc");
 
@@ -57,6 +59,7 @@ function insertCardsInDOM(eventsCardsContainer, eventsList) {
 
 function getCard(eventDetails) {
   // Set Premiere Events
+  console.log(eventDetails.date);
   if (eventDetails.date > data.currentDate) {
     eventDetails.premiere = "¡COMING SOON!";
 
@@ -96,83 +99,90 @@ function insertCategoriesFilterBar(filterBarContainer, categoryEventsList) {
 
 // Executs when DOM is ready
 document.addEventListener("DOMContentLoaded", function (event) {
-  // Get the Events List
-  const eventsList = getEventsList(data, filterEvents);
+  // Get the Events List asynchronously
+  fetchApi()
+    .then((data) => {
+      const eventsList = getEventsList(data, filterEvents);
 
-  // Insert Card objects in DOM
-  const eventsCardsContainer = document.getElementById("event-card-container");
-  insertCardsInDOM(eventsCardsContainer, eventsList);
+      // Insert Card objects in DOM
+      const eventsCardsContainer = document.getElementById(
+        "event-card-container"
+      );
+      insertCardsInDOM(eventsCardsContainer, eventsList);
 
-  // Create the Categories Filter and Search Bar Engine ----------------------------------------------------------------
+      // Create the Categories Filter and Search Bar Engine ----------------------------------------------------------------
 
-  // Configure the Categories Filter
-  let activeFilters = [];
-  let filterBarContainer = document.getElementById("filter-bar-container");
+      // Configure the Categories Filter
+      let activeFilters = [];
+      let filterBarContainer = document.getElementById("filter-bar-container");
 
-  filterBarContainer.addEventListener("click", (e) => {
-    activeFilters = Array.prototype.slice
-      .call(filterBarContainer.querySelectorAll(".category-filter:checked"))
-      .map((filter) => filter.value);
+      filterBarContainer.addEventListener("click", (e) => {
+        activeFilters = Array.prototype.slice
+          .call(filterBarContainer.querySelectorAll(".category-filter:checked"))
+          .map((filter) => filter.value);
 
-    applyfilters()
-  })
-
-  // Insert the Categories Filter
-  let categoryEventsList = getCategoriesList(eventsList);
-  insertCategoriesFilterBar(filterBarContainer, categoryEventsList);
-
-  // Configure Search Bar
-  let searchBarInput = document.getElementById("search-bar-input");
-
-  searchBarInput.addEventListener("input", (e) => {
-    applyfilters()
-  })
-
-  // configure the Clear Filters button
-  let clearFiltersButton = document.querySelector(".clear-filters-button")
-  clearFiltersButton.addEventListener("click", (e) => clearFilters())
-
-  // Functions
-
-  function applyfilters() {
-    let eventsFound = false
-    eventsCardsContainer
-      .querySelectorAll(".event-card")
-      .forEach((eventCard) => {
-        if (
-          (activeFilters.includes(
-            eventCard.querySelector(".category-event").textContent
-          ) ||
-            activeFilters.length === 0) &&
-          eventCard.querySelector(".event-title").textContent.toString().toLowerCase().includes(searchBarInput.value.toString().toLowerCase())
-        ) {
-          eventCard.style.display = "flex";
-          eventsFound = true
-        } else {
-          eventCard.style.display = "none";
-        }
+        applyfilters();
       });
-      if (!eventsFound)
-      {
-        document.querySelector(".no-event-card").style.display = "flex"
+
+      // Insert the Categories Filter
+      let categoryEventsList = getCategoriesList(eventsList);
+      insertCategoriesFilterBar(filterBarContainer, categoryEventsList);
+
+      // Configure Search Bar
+      let searchBarInput = document.getElementById("search-bar-input");
+
+      searchBarInput.addEventListener("input", (e) => {
+        applyfilters();
+      });
+
+      // configure the Clear Filters button
+      let clearFiltersButton = document.querySelector(".clear-filters-button");
+      clearFiltersButton.addEventListener("click", (e) => clearFilters());
+
+      // Functions
+
+      function applyfilters() {
+        let eventsFound = false;
+        eventsCardsContainer
+          .querySelectorAll(".event-card")
+          .forEach((eventCard) => {
+            if (
+              (activeFilters.includes(
+                eventCard.querySelector(".category-event").textContent
+              ) ||
+                activeFilters.length === 0) &&
+              eventCard
+                .querySelector(".event-title")
+                .textContent.toString()
+                .toLowerCase()
+                .includes(searchBarInput.value.toString().toLowerCase())
+            ) {
+              eventCard.style.display = "flex";
+              eventsFound = true;
+            } else {
+              eventCard.style.display = "none";
+            }
+          });
+        if (!eventsFound) {
+          document.querySelector(".no-event-card").style.display = "flex";
+        } else {
+          document.querySelector(".no-event-card").style.display = "none";
+        }
       }
-      else
-      {
-        document.querySelector(".no-event-card").style.display = "none"
+
+      function showNoEvents() {
+        eventsCardsContainer.innerHTML += defineNoEventCard();
       }
-  }
 
-  function showNoEvents()
-  {
-    eventsCardsContainer.innerHTML += defineNoEventCard()
-  }
+      function clearFilters() {
+        searchBarInput.value = "";
+        activeFilters = [];
 
-  function clearFilters()
-  {
-    searchBarInput.value = ""
-    activeFilters = []
-
-    Array.prototype.slice.call(filterBarContainer.querySelectorAll(".category-filter:checked")).map((filter) => filter.checked = false);
-    applyfilters()
-  }
-})
+        Array.prototype.slice
+          .call(filterBarContainer.querySelectorAll(".category-filter:checked"))
+          .map((filter) => (filter.checked = false));
+        applyfilters();
+      }
+    })
+    .catch((error) => console.log(error));
+});
