@@ -59,21 +59,22 @@ function insertCardsInDOM(eventsCardsContainer, eventsList) {
 
 function getCard(eventDetails) {
   // Set Premiere Events
-  console.log(eventDetails.date);
-  if (eventDetails.date > data.currentDate) {
+  let currentDate = new Date();
+  currentDate = currentDate.toJSON();
+
+  if (eventDetails.date > currentDate) {
     eventDetails.premiere = "¡COMING SOON!";
 
     let days =
-      new Date(eventDetails.date).getTime() -
-      new Date(data.currentDate).getTime();
+      new Date(eventDetails.date).getTime() - new Date(currentDate).getTime();
     days = days / (1000 * 60 * 60 * 24);
 
     eventDetails.premiereDate =
       "PREMIERE ON " +
       new Date(eventDetails.date).toLocaleDateString("en-US") +
       " • " +
-      days +
-      (days > 1 ? " DAYS" : " DAY") +
+      parseInt(days) +
+      (parseInt(days) > 1 ? " DAYS" : " DAY") +
       " LEFT";
   } else {
     eventDetails.premiere = "&nbsp;";
@@ -99,8 +100,11 @@ function insertCategoriesFilterBar(filterBarContainer, categoryEventsList) {
 
 // Executs when DOM is ready
 document.addEventListener("DOMContentLoaded", function (event) {
+  
   // Get the Events List asynchronously
-  fetchApi()
+  let urlApi = fetchApiEvents(filterEvents)
+
+  fetchApi(urlApi)
     .then((data) => {
       const eventsList = getEventsList(data, filterEvents);
 
