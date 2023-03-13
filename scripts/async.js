@@ -35,3 +35,24 @@ async function fetchApi(urlApi) {
 }
 
 // let data = fetchApi().then((response) => response).catch((error) => console.log(error))
+
+
+/*
+To Implement
+
+const check3Countries = async function(c1, c2, c3) {
+  try {
+    const data = await Promise.all([
+      fetch(`https://restcountries.com/v3.1/name/${c1}`),
+      fetch(`https://restcountries.com/v3.1/name/${c2}`),
+      fetch(`https://restcountries.com/v3.1/name/${c3}`)
+    ])
+    console.log(data.map(d => d.ok))
+  } catch (err) {
+    console.error(err)
+  }
+}
+
+check3Countries('portugal', 'canada', 'notacountry')
+
+*/
