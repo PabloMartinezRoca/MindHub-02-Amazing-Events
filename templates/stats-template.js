@@ -41,7 +41,7 @@ function defineEventsStatsByCategory (stats) {
 		template += `
 				<tr>
 					<td>${categoryData.category}</td>
-					<td>${revenue.toLocaleString("es-AR")}</td>  
+					<td>$ ${revenue.toLocaleString("es-AR")}</td>  
 					<td>${attendancePct.toFixed(2)} %</td>
 				</tr>
 		`
