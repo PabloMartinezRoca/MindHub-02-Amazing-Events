@@ -10,31 +10,43 @@ function getEventIdFromURL() {
   }
 }
 
-function getEventDetails(data, eventID) {
-  if (data.events.find((event) => event._id == eventID)) {
-    return data.events.find((event) => event._id == eventID);
+/* DEPRECATED 
+function getEventDetails(data) {
+  if (data.events.find((event) => event.id == eventID)) {
+    return data.events.find((event) => event.id == eventID);
   }
   window.location.href = "index.html";
-}
+} 
+*/
 
 function getCard(eventDetails) {
   // Set Premiere Events
-  if (eventDetails.date > data.currentDate) {
+
+	/* 
+	let fecha = ${(new Date(eventDetails.date)).getDate()+1}/${(new Date(eventDetails.date)).getMonth()+1}/${(new Date(eventDetails.date)).getFullYear()}
+	console.log(fecha)
+
+   */
+	let currentDate = new Date()
+	currentDate = currentDate.toJSON();
+
+	if (eventDetails.date > currentDate) {
     eventDetails.premiere = "¡COMING SOON!";
 
     let days =
       new Date(eventDetails.date).getTime() -
-      new Date(data.currentDate).getTime();
+      new Date(currentDate).getTime();
     days = days / (1000 * 60 * 60 * 24);
 
     eventDetails.premiereDate =
       "PREMIERE ON " +
       new Date(eventDetails.date).toLocaleDateString("en-US") +
       " • " +
-      days +
-      (days > 1 ? " DAYS" : " DAY") +
+      parseInt(days) +
+      (parseInt(days) > 1 ? " DAYS" : " DAY") +
       " LEFT";
   } else {
+		eventDetails.premiere = "&nbsp;";
     eventDetails.premiereDate =
       "SINCE " + new Date(eventDetails.date).toLocaleDateString("en-US");
   }
@@ -59,21 +71,24 @@ function insertBackgroundContainer(containerID, eventDetails) {
 
 // Executs when DOM is ready
 document.addEventListener("DOMContentLoaded", function (event) {
+  
+	// Get the event ID or redirect to index page if null
+  let eventID = getEventIdFromURL();
 
-	// Get the Events List asynchronously
-  fetchApi()
-    .then((data) => {
-      // Get the event ID or redirect to index page if null
-      let eventID = getEventIdFromURL();
-
-      // Get the event details
-      let eventDetails = getEventDetails(data, eventID);
+  // Get the Events List asynchronously
+  let urlApi = fetchApiEventDetails(eventID)
+	
+	fetchApi(urlApi)
+    .then((eventDetails) => {
+      
+			// Get the event details => DEPRECATED // NOW WITH API
+      // let eventDetails = getEventDetails(data);
 
       // Insert Card Details object in DOM
-      insertCardDetailsInDOM("event-details-card-container", eventDetails);
+      insertCardDetailsInDOM("event-details-card-container", eventDetails.response);
 
       // Insert background image for card details
-      insertBackgroundContainer("bg-event-details-card", eventDetails);
+      insertBackgroundContainer("bg-event-details-card", eventDetails.response);
     })
-    .catch((error) => console.log(error))
+    .catch((error) => console.log(error));
 });
