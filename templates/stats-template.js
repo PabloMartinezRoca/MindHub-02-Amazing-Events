@@ -54,9 +54,9 @@ function defineEventsStatsByCategory(stats) {
   for (let categoryData of stats) {
     template += `
 				<tr>
-					<td>${categoryData.category}</td>
-					<td>$ ${categoryData.revenue.toLocaleString("en-US")}</td>  
-					<td>${categoryData.attendancePct} %</td>
+					<td class="col-3">${categoryData.category}</td>
+					<td class="col-3">$ ${categoryData.revenue.toLocaleString("en-US")}</td>  
+					<td class="col-3">${categoryData.attendancePct} %</td>
 				</tr>
 		`;
   }
